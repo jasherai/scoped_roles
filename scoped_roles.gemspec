@@ -7,16 +7,18 @@ require "scoped_roles/version"
 Gem::Specification.new do |s|
   s.name        = "scoped_roles"
   s.version     = ScopedRoles::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ScopedRoles."
+  s.authors     = ["Pritesh Mehta"]
+  s.email       = ["pritesh@phatforge.com"]
+  s.homepage    = "https://github.com/jasherai/scoped_roles/wiki"
+  s.summary     = "database backed roles that can be scoped to a model for white label systems"
   s.description = "TODO: Description of ScopedRoles."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.0"
+  s.add_dependency "rails", "~> 3.2.2"
+  s.add_dependency "railties", "~> 3.2.2"
+  #s.add_dependency "rails", "~> 3.2.2"
   # s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
