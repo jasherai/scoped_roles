@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["pritesh@phatforge.com"]
   s.homepage    = "https://github.com/jasherai/scoped_roles/wiki"
   s.summary     = "database backed roles that can be scoped to a model for white label systems"
-  s.description = "TODO: Description of ScopedRoles."
+  s.description = "Roles scoped by developer defined class. In white label solutions you may need to allow your end users to manage roles on their instance of the account."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]

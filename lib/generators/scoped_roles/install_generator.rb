@@ -15,8 +15,14 @@ module ScopedRoles
         template "initializer.rb", "config/initializers/scoped_roles.rb"
       end
 
+      def copy_models
+        template "role.rb", "app/models/#{ScopedRoles.role_model.name.downcase}.rb"
+        #TODO: Change assignment name to something better or dynamic
+        template "assignment.rb", "app/models/assignment.rb"
+      end
+
       def copy_migration
-        migration_template "joined_roles_migration.rb", "db/migrate/scoped_roles_#{role_model.tableize}_joined_through"
+        migration_template "joined_roles_migration.rb", "db/migrate/setup_scoped_roles"
       end
 
       def show_readme

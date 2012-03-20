@@ -5,3 +5,5 @@
     See the notes below (if any) for further steps
 ===========================================================
 
+* role_scope.current needs to be populated in the application helper.
+  perhaps in the current_site before_filter (to be automated)
