@@ -1,8 +1,16 @@
+GIT
+  remote: git://github.com/ryanb/cancan.git
+  revision: c94de4ab1805d2e080ebd658051c59d0ec5147ce
+  branch: 2.0
+  specs:
+    cancan (2.0.0.alpha)
+
 PATH
   remote: .
   specs:
     scoped_roles (0.0.1)
       rails (~> 3.2.2)
+      railties (~> 3.2.2)
 
 GEM
   remote: http://rubygems.org/
@@ -92,6 +100,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cancan!
   jquery-rails
+  rails (~> 3.2.2)
   scoped_roles!
   sqlite3
