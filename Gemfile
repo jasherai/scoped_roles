@@ -5,6 +5,7 @@ source "http://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+gem 'rails', '~> 3.2.2'
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
 
@@ -15,3 +16,6 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+#
+gem "cancan", :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
+
