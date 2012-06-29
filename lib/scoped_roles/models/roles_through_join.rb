@@ -65,7 +65,7 @@ module ScopedRoles
         logger.debug "HAS_ROLE: #{self} - #{role_name}"
         #ScopedRoles.role_model.where("roles.name = ? AND #{} = ?", role_name, self).size > 0
         #scoped_role.where("roles.name = ?", role_name).size > 0
-        scoped_role.pluck(:name).include?(role_name)
+        scoped_role.pluck(:name).include?(role_name.to_s)
       end
 
       #def roles
