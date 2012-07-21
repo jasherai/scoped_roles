@@ -48,7 +48,7 @@ module ScopedRoles
       end
 
       def remove_role(role_name)
-        logger.info "GRANT_ROLE:: #{scoped_role}"
+        logger.info "REVOKE_ROLE:: #{scoped_role}"
         role = ScopedRoles.role_model.find_or_create_by_name_and_site_id(role_name, ScopedRoles.role_scope.current.id)
         return unless self.roles.find(role.id)
         self.roles.delete(role)
@@ -62,17 +62,19 @@ module ScopedRoles
       end
 
       def has_role?(role_name)
-        logger.debug "HAS_ROLE: #{self} - #{role_name}"
+        logger.debug "HAS_ROLE: #{self.try(:name)} - #{role_name}"
         #ScopedRoles.role_model.where("roles.name = ? AND #{} = ?", role_name, self).size > 0
         #scoped_role.where("roles.name = ?", role_name).size > 0
-        scoped_role.pluck(:name).include?(role_name.to_s)
+        #scoped_role.pluck(:name).include?(role_name.to_s)
+        self.roles.include?(role_name.to_s)
       end
 
-      #def roles
+      def roles
         ##super
         ##by_scope.joins(ScopedRoles.user_model.tableize)
         #self.by_scope
-      #end
+        scoped_role.pluck(:name)
+      end
 
       #def grant_role
         #"TODO:grant_role"
