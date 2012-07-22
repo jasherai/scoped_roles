@@ -66,6 +66,7 @@ module ScopedRoles
         #ScopedRoles.role_model.where("roles.name = ? AND #{} = ?", role_name, self).size > 0
         #scoped_role.where("roles.name = ?", role_name).size > 0
         #scoped_role.pluck(:name).include?(role_name.to_s)
+        logger.debug "HAS_ROLE: #{self.roles}"
         self.roles.include?(role_name.to_s)
       end
 
@@ -73,7 +74,7 @@ module ScopedRoles
         ##super
         ##by_scope.joins(ScopedRoles.user_model.tableize)
         #self.by_scope
-        scoped_role.pluck(:name)
+        scoped_role.to_a
       end
 
       #def grant_role
