@@ -35,7 +35,8 @@ module ScopedRoles
         #current_scope = ScopedRoles.role_scope.send(:current)
         #logger.info current_scope.name if current_scope.respond_to?(:name)
         #where("#{ScopedRoles.role_model.name.downcase.pluralize}.#{ScopedRoles.role_scope.name.downcase}_id = ?", current_scope.id)
-        ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id)
+        !ScopedRoles.role_scope.current.nil? ? ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id) :
+          ScopedRoles.role_model
       end
 
       def scoped_role
