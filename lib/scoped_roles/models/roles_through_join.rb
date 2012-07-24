@@ -40,7 +40,7 @@ module ScopedRoles
 
       def scoped_role
         logger.info "SCOPED_ROLE: @ #{@scoped_role} #{ScopedRoles.role_scope} B"
-        @scoped_role ||= by_scope
+        @scoped_role = by_scope
           # send(:"find_by_\#{ScopedRoles.role_scope.name.downcase}_name(#{Thread.current[:role_scope]})") if Thread.current[:role_scope]
         # @scoped_role ||= ScopedRoles.role_model
         logger.info "SCOPED_ROLE: @#{@scoped_role} #{ScopedRoles.role_scope} E"
