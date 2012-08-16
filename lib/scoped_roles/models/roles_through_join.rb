@@ -81,7 +81,7 @@ module ScopedRoles
       # returns Array
       def roles
         roles = super
-        roles & scoped_role
+        roles.where(id: scoped_role)
       end
 
       #def grant_role
