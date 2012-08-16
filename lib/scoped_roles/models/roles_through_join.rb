@@ -35,7 +35,7 @@ module ScopedRoles
         logger.debug "ScopedRoles: by_scope - Do we have a current role_scope [#{ScopedRoles.role_scope.name}] set? #{ScopedRoles.role_scope.current}"
         #by_scope = !ScopedRoles.role_scope.current.nil? ? ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id) :
           #ScopedRoles.role_model.scoped
-        by_scope = ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.try(:id))
+        by_scope = ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id in (?)", [ScopedRoles.role_scope.current.try(:id), nil])
         logger.debug "ScopedRoles: by_scope - returning scope [#{by_scope}]"
         by_scope
       end
