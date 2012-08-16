@@ -1,1 +1,10 @@
+* 6f38d24 bump version
+*   39f3e76 Merge branch 'hotfix/0.0.4' into develop
+|\  
+* | 8d37dde Use correct method on array of roles as returned by the roles method
+* | 80e45b7 Merge branch 'release/0.0.3' into develop
+ /  
+| * ef97924 Merge branch 'hotfix/0.0.4'
+|/  
+* 25582d4 Update ChangeLog
 * aa8a04e bump version
