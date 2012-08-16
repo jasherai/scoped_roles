@@ -72,7 +72,8 @@ module ScopedRoles
         return false unless role = scoped_role.where(name: role_name.to_s).first
         logger.debug "ScopedRoles: has_role? - returned role : #{role.name}"
         logger.debug "ScopedRoles: has_role? User: #{self.try(:name)} has roles: #{self.roles}"
-        self.roles.where(id: role.id).any?
+        #self.roles.where(id: role.id).any?
+        self.roles.include?(role)
       end
 
       # Scoped roles for the user
