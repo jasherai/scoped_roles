@@ -1,2 +1,2 @@
-* 957bbc8 Include global Roles in returned roles scope
-* f453eb5 Include Global Roles in scoping results
+* 63fe863 return an arel object from our roles method to enable chaining
+* 79bbcc5 bump version
