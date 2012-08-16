@@ -1,4 +1,1 @@
-* 82da464 bump version
-* 8426438 If no scope id is available/set, search globally
-* fafac2d Remove caching of scope for the moment
-* 9b33268 fixup has_role method
+* aa8a04e bump version
