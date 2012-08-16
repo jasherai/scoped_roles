@@ -32,57 +32,56 @@ module ScopedRoles
       end
 
       def by_scope
-        #current_scope = ScopedRoles.role_scope.send(:current)
-        #logger.info current_scope.name if current_scope.respond_to?(:name)
-        #where("#{ScopedRoles.role_model.name.downcase.pluralize}.#{ScopedRoles.role_scope.name.downcase}_id = ?", current_scope.id)
-        !ScopedRoles.role_scope.current.nil? ? ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id) :
-          ScopedRoles.role_model
+        logger.debug "ScopedRoles: by_scope - Do we have a current role_scope [#{ScopedRoles.role_scope.name}] set? #{ScopedRoles.role_scope.current}"
+        #by_scope = !ScopedRoles.role_scope.current.nil? ? ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id) :
+          #ScopedRoles.role_model.scoped
+        by_scope = ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.try(:id))
+        logger.debug "ScopedRoles: by_scope - returning scope [#{by_scope}]"
+        by_scope
       end
 
       def scoped_role
-        logger.info "SCOPED_ROLE: @ #{@scoped_role} #{ScopedRoles.role_scope} B"
+        logger.debug "SCOPED_ROLE: @ #{@scoped_role} #{ScopedRoles.role_scope} B"
         @scoped_role = by_scope
           # send(:"find_by_\#{ScopedRoles.role_scope.name.downcase}_name(#{Thread.current[:role_scope]})") if Thread.current[:role_scope]
         # @scoped_role ||= ScopedRoles.role_model
-        logger.info "SCOPED_ROLE: @#{@scoped_role} #{ScopedRoles.role_scope} E"
+        logger.debug "SCOPED_ROLE: @#{@scoped_role} #{ScopedRoles.role_scope} E"
        @scoped_role
       end
 
       def remove_role(role_name)
-        logger.info "REVOKE_ROLE:: #{scoped_role}"
+        logger.info "[ScopedRole][remove_role] - removing role #{role_name.to_s} from #{self.class_name} [#{self.try(:id)} - #{self.try(:name)}]"
         role = ScopedRoles.role_model.find_or_create_by_name_and_site_id(role_name, ScopedRoles.role_scope.current.id)
         return unless self.roles.find(role.id)
         self.roles.delete(role)
       end
 
       def grant_role(role_name)
-        logger.info "GRANT_ROLE:: #{scoped_role}"
+        logger.info "[ScopedRole][grant_role] - grant role #{role_name.to_s} from #{self.class_name} [#{self.try(:id)} - #{self.try(:name)}]"
         role = ScopedRoles.role_model.find_or_create_by_name_and_site_id(role_name, ScopedRoles.role_scope.current.id)
         return if self.roles.find(role.id)
         self.roles << role
       end
 
+      #  has_role?
+      #
+      #  returns [boolean]
       def has_role?(role_name)
         logger.debug "ScopedRoles: has_role? - Check if user: #{self.try(:name)} has_role: #{role_name}"
-        return nil unless role = scoped_role.where(name: role_name.to_s).first
+        # TODO: make the role test case insensitive
+        return false unless role = scoped_role.where(name: role_name.to_s).first
         logger.debug "ScopedRoles: has_role? - returned role : #{role.name}"
-        #ScopedRoles.role_model.where("roles.name = ? AND #{} = ?", role_name, self).size > 0
-        #scoped_role.where("roles.name = ?", role_name).size > 0
-        #scoped_role.pluck(:name).include?(role_name.to_s)
         logger.debug "ScopedRoles: has_role? User: #{self.try(:name)} has roles: #{self.roles}"
-        self.roles.where(id: role.id).first
+        self.roles.where(id: role.id).any?
       end
 
-      # User.roles is defined by the association. This is unneeded at this point
-      #def roles
-        ##super
-        ##by_scope.joins(ScopedRoles.user_model.tableize)
-        #self.by_scope
-        #scoped_role.to_a
-        #self.send("#{ScopedRoles.role_model.name.downcase.pluralize}")
-        #logger.debug "#{self.class.name}"
-        #self.send(:roles)
-      #end
+      # Scoped roles for the user
+      # return the intersection of a users roles and the roles available on the site.
+      # returns Array
+      def roles
+        roles = super
+        roles & scoped_role
+      end
 
       #def grant_role
         #"TODO:grant_role"
