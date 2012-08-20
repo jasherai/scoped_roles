@@ -32,21 +32,19 @@ module ScopedRoles
       end
 
       def by_scope
-        logger.debug "ScopedRoles: by_scope - Do we have a current role_scope [#{ScopedRoles.role_scope.name}] set? #{ScopedRoles.role_scope.current}"
+        logger.debug "[ScopedRoles][by_scope] - Do we have a current role_scope [#{ScopedRoles.role_scope.name}] set? #{ScopedRoles.role_scope.current.try(:id)}"
         #by_scope = !ScopedRoles.role_scope.current.nil? ? ScopedRoles.role_model.where("#{ScopedRoles.role_scope.name.downcase}_id = ?", ScopedRoles.role_scope.current.id) :
           #ScopedRoles.role_model.scoped
         by_scope = ScopedRoles.role_model.where(:"#{ScopedRoles.role_scope.name.downcase}_id" => [ScopedRoles.role_scope.current.try(:id), nil])
-        logger.debug "ScopedRoles: by_scope - returning scope [#{by_scope}]"
+        logger.debug "[ScopedRoles][by_scope] - returning scope [#{by_scope.to_sql}]"
         by_scope
       end
 
       def scoped_role
-        logger.debug "SCOPED_ROLE: @ #{@scoped_role} #{ScopedRoles.role_scope} B"
         @scoped_role = by_scope
           # send(:"find_by_\#{ScopedRoles.role_scope.name.downcase}_name(#{Thread.current[:role_scope]})") if Thread.current[:role_scope]
         # @scoped_role ||= ScopedRoles.role_model
-        logger.debug "SCOPED_ROLE: @#{@scoped_role} #{ScopedRoles.role_scope} E"
-       @scoped_role
+        #@scoped_role
       end
 
       def remove_role(role_name)
@@ -67,11 +65,11 @@ module ScopedRoles
       #
       #  returns [boolean]
       def has_role?(role_name)
-        logger.debug "ScopedRoles: has_role? - Check if user: #{self.try(:name)} has_role: #{role_name}"
+        logger.debug "[ScopedRoles][has_role?] - Check if user: #{self.try(:name)} has_role: #{role_name}"
         # TODO: make the role test case insensitive
         return false unless role = scoped_role.where(name: role_name.to_s).first
-        logger.debug "ScopedRoles: has_role? - returned role : #{role.name}"
-        logger.debug "ScopedRoles: has_role? User: #{self.try(:name)} has roles: #{self.roles}"
+        logger.debug "[ScopedRoles][has_role?] - Role exists : #{role.name} [#{role.id}]"
+        logger.debug "[ScopedRoles][has_role?] - User: #{self.try(:name)} has roles: #{self.roles} on this scope"
         #self.roles.where(id: role.id).any?
         self.roles.include?(role)
       end
