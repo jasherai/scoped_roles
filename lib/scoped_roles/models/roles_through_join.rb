@@ -79,7 +79,8 @@ module ScopedRoles
       # returns Array
       def roles
         roles = super
-        roles.where(id: scoped_role)
+        logger.debug "[ScopedRoles][roles] - self (User) is a new_record? [#{self.new_record?}]"
+        self.new_record? ? roles : roles.where(id: scoped_role)
       end
 
       #def grant_role
