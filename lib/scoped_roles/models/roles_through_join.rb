@@ -48,14 +48,14 @@ module ScopedRoles
       end
 
       def remove_role(role_name)
-        logger.info "[ScopedRole][remove_role] - removing role #{role_name.to_s} from #{self.class_name} [#{self.try(:id)} - #{self.try(:name)}]"
+        logger.info "[ScopedRole][remove_role] - removing role #{role_name.to_s} from #{self.class.name} [#{self.try(:id)} - #{self.try(:name)}]"
         role = ScopedRoles.role_model.find_or_create_by_name_and_site_id(role_name, ScopedRoles.role_scope.current.id)
         return unless self.roles.find(role.id)
         self.roles.delete(role)
       end
 
       def grant_role(role_name)
-        logger.info "[ScopedRole][grant_role] - grant role #{role_name.to_s} from #{self.class_name} [#{self.try(:id)} - #{self.try(:name)}]"
+        logger.info "[ScopedRole][grant_role] - grant role #{role_name.to_s} from #{self.class.name} [#{self.try(:id)} - #{self.try(:name)}]"
         role = ScopedRoles.role_model.find_or_create_by_name_and_site_id(role_name, ScopedRoles.role_scope.current.id)
         return if self.roles.find(role.id)
         self.roles << role
