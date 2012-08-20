@@ -1,2 +1,6 @@
-* 63fe863 return an arel object from our roles method to enable chaining
-* 79bbcc5 bump version
+* b16d550 bump version
+* 35bc3cd If self is a new_record? then don't intersect with the site roles.
+* a29ec2b be consistant with logging structure
+* 7bfe7d8 Merge branch 'hotfix/0.0.7' into develop
+* eb30d1e Merge branch 'hotfix/0.0.6' into develop
+* 5530f0c Merge branch 'release/0.0.5' into develop
