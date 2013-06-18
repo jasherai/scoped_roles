@@ -68,8 +68,7 @@ module ScopedRoles
         logger.debug "[ScopedRoles][has_role?] - Check if user: #{self.try(:name)} has_role: #{role_name}"
         # TODO: make the role test case insensitive
         return false unless role = scoped_role.where(name: role_name.to_s).first
-        logger.debug "[ScopedRoles][has_role?] - Role exists : #{role.name} [#{role.id}]"
-        logger.debug "[ScopedRoles][has_role?] - User: #{self.try(:name)} has roles: #{self.roles} on this scope"
+        logger.debug "[ScopedRoles][has_role?] - User: #{self.try(:name)} has roles: #{self.roles.try(:to_sentence)} on this scope"
         #self.roles.where(id: role.id).any?
         self.roles.include?(role)
       end
