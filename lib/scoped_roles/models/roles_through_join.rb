@@ -117,10 +117,10 @@ module ScopedRoles
             self.send :has_many, :roles
             self.send :instance_eval, "
               def self.current
-                Thread.current[:role_scope]
+                RequestStore.store[:role_scope]
               end
               def self.current=(role_scope)
-                Thread.current[:role_scope] = role_scope
+                RequestStore.store[:role_scope] = role_scope
               end
             "
           end

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.2"
   s.add_dependency "railties", "~> 3.2.2"
+  s.add_runtime_dependency 'request_store', '>= 1.0.5'
   #s.add_dependency "rails", "~> 3.2.2"
   # s.add_dependency "jquery-rails"
 

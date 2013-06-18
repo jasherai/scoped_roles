@@ -1,5 +1,5 @@
 require "scoped_roles/engine"
-#require 'active_support/dependencies'
+require 'request_store'
 
 module ScopedRoles
   mattr_accessor :role_model
