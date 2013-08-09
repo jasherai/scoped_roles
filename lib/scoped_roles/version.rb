@@ -1,3 +1,3 @@
 module ScopedRoles
-  VERSION = "0.0.9"
+  VERSION = File.read(File.join('VERSION'))
 end
